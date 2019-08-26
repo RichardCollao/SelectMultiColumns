@@ -19,16 +19,13 @@ Pendiente...
 
 ## Licencia
 
-license" href="http://creativecommons.org/licenses/by-sa/4.0/"&gt;
-<img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /&gt;
-a&gt;
+## Licencia
 
-license" href="http://creativecommons.org/licenses/by-sa/4.0/"&gt;Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional Licensea&gt;.
+ <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+                <img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
+</a>
+
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional License</a>.
 
 ## Versionado
 El proyecto utiliza SemVer para el versionado. Para todas las versiones disponibles, mira los tags en este repositorio.
-
-## Dependencias
-[W3.CSS Framework](https://www.w3schools.com/w3css/ "W3.CSS Framework")
-
-[Font Awesome](https://fontawesome.com/icons?d=gallery&m=free "Font Awesome Search Icons: Search icons... Search! Search! Start Icons Docs Support Plans Blog")
