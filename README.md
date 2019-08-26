@@ -8,7 +8,7 @@ Es un componente similar en funcionamiento y apariencia a un componente de tipo 
 Select Multi Colummns no es un componente como tal ya que de momento no existe de manera nativa un componente de estas características, sin embargo es posible crear un elemento creado de manera artesanal utilizando algunos trucos.
 Como cualquier otro componente de formulario posee los correspondientes atributos name y value para la recuperación de datos, su comportamiento está basado en la etiqueta select, por lo tanto posible interactuar con el elemento mediante teclado y mouse, además es posible adaptar su apariencia como se haría con cualquier otro componente.
 
-![Image description]()
+![Image description](https://github.com/RichardCollao/SelectMultiColumns/blob/master/docs/captura.png)
 
 ## Requerimientos
 vanilla.js (ECMAScript 6)
