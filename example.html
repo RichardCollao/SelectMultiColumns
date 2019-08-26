@@ -14,13 +14,41 @@
         </div>
 
         <script type="text/javascript">
-            //           var materials = [{"id":719,"columns":["Perfil AT 3m","272,00","tira","Estructura Metalcom"]},{"id":569,"columns":["Perfil C 60*38*6*0.85mm x 2.4mt","1.978,00","tira","Estructura Metalcom"]},{"id":568,"columns":["Perfil C 60*38*6*0.85mm x 3mt","30,00","tira","Estructura Metalcom"]},{"id":567,"columns":["Perfil C 60*38*6*0.85mm x 4mt","159,00","tira","Estructura Metalcom"]},{"id":643,"columns":["Perfil C 90*38*12*0.85mm x 4mt","54,00","tira","Estructura Metalcom"]},{"id":675,"columns":["Perfil canal económico 39x20 0.5 mm 3 mt","74,00","un","Estructura Metalcom"]},{"id":695,"columns":["Perfil Cuadrado 20*20*2mmx6mt","13,00","tira","Estructura metalica escala"]},{"id":694,"columns":["Perfil Cuadrado 40*40*2mmx6mt","14,00","tira","Estructura metalica escala"]},{"id":693,"columns":["Perfil Cuadrado 75*75*2mmx6mt","20,00","tira","Estructura metalica escala"]},{"id":762,"columns":["Perfil J Blanco 0.60m V4","166,00","un","Hojalateria"]},{"id":764,"columns":["Perfil J Blanco 0.60m V6","80,00","un","Hojalateria"]},{"id":763,"columns":["Perfil J Blanco 0.82m V6","40,00","un","Hojalateria"]},{"id":759,"columns":["Perfil J Blanco 1.00m V5","281,60","un","Hojalateria"]},{"id":761,"columns":["Perfil J Blanco 1.40m V7","60,00","un","Hojalateria"]},{"id":754,"columns":["Perfil J Blanco 2.40m","88,00","un","Hojalateria"]},{"id":753,"columns":["Perfil J Blanco 2.45m","336,00","un","Hojalateria"]},{"id":755,"columns":["Perfil J Blanco 2.55m","3,00","un","Hojalateria"]},{"id":756,"columns":["Perfil J Blanco 2.65m","6,00","un","Hojalateria"]},{"id":752,"columns":["Perfil J Blanco 3.60m","26,00","un","Hojalateria"]},{"id":1025,"columns":["Perfil J Blanco 3m","304,00","un","Hojalateria"]},{"id":757,"columns":["Perfil J Blanco 6m (2un 3m)","1,50","un","Hojalateria"]},{"id":673,"columns":["Perfil montante económico 38x38x6 0.5 mm 2,4","458,00","bidon","Arriendo Equipos y maquinarias"]},{"id":574,"columns":["Perfil Omega Economico 35*38*15*8*0.5*6mt","152,00","tira","Estructura Metalcom"]},{"id":676,"columns":["Perfil Omega económico 40R 40x18x10x0,5*6mt (Portante)","707,00","un","Estructura Metalcom"]},{"id":573,"columns":["Perfil Omega normal 35*38*15*8*0.85*3mt","107,00","tira","Estructura Metalcom"]},{"id":572,"columns":["Perfil Omega normal 35*38*15*8*0.85*6mt","73,00","tira","Estructura Metalcom"]},{"id":696,"columns":["Perfil Rectangular 20*30*2mmx6mt","10,00","tira","Estructura metalica escala"]},{"id":317,"columns":["perfil rectangular 40*20*2mm*6m","10,00","tira","Materiales de construcción"]},{"id":411,"columns":["perfil rectangular 50*20*2mm*6m","14,00","tira","Materiales de construcción"]},{"id":642,"columns":["Perfil U 62*25-0.85 3mt","60,00","tira","Estructura Metalcom"]},{"id":566,"columns":["Perfil U 62*25-0.85 6mt","526,00","un","Estructura Metalcom"]},{"id":677,"columns":["Perfil U 92*25-0.85 6mt","226,00","tira","Estructura Metalcom"]},{"id":994,"columns":["Perfil U acero 40x20x2mm","7,00","tira","Materiales de construcción"]}];
-            var materials = [[719, ["Perfil AT 3m", "272,00", "tira", "Estructura Metalcom"]],
+            var materials = [
+                [719, ["Perfil AT 3m", "272,00", "tira", "Estructura Metalcom"]],
                 [569, ["Perfil C 60*38*6*0.85mm x 2.4mt", "1.978,00", "tira", "Estructura Metalcom"]],
                 [568, ["Perfil C 60*38*6*0.85mm x 3mt", "30,00", "tira", "Estructura Metalcom"]],
                 [567, ["Perfil C 60*38*6*0.85mm x 4mt", "159,00", "tira", "Estructura Metalcom"]],
-                [643, ["Perfil C 90*38*12*0.85mm x 4mt", "54,00", "tira", "Estructura Metalcom"]], [675, ["Perfil canal económico 39x20 0.5 mm 3 mt", "74,00", "un", "Estructura Metalcom"]], [695, ["Perfil Cuadrado 20*20*2mmx6mt", "13,00", "tira", "Estructura metalica escala"]], [694, ["Perfil Cuadrado 40*40*2mmx6mt", "14,00", "tira", "Estructura metalica escala"]], [693, ["Perfil Cuadrado 75*75*2mmx6mt", "20,00", "tira", "Estructura metalica escala"]], [762, ["Perfil J Blanco 0.60m V4", "166,00", "un", "Hojalateria"]], [764, ["Perfil J Blanco 0.60m V6", "80,00", "un", "Hojalateria"]], [763, ["Perfil J Blanco 0.82m V6", "40,00", "un", "Hojalateria"]], [759, ["Perfil J Blanco 1.00m V5", "281,60", "un", "Hojalateria"]], [761, ["Perfil J Blanco 1.40m V7", "60,00", "un", "Hojalateria"]], [754, ["Perfil J Blanco 2.40m", "88,00", "un", "Hojalateria"]], [753, ["Perfil J Blanco 2.45m", "336,00", "un", "Hojalateria"]], [755, ["Perfil J Blanco 2.55m", "3,00", "un", "Hojalateria"]], [756, ["Perfil J Blanco 2.65m", "6,00", "un", "Hojalateria"]], [752, ["Perfil J Blanco 3.60m", "26,00", "un", "Hojalateria"]], [1025, ["Perfil J Blanco 3m", "304,00", "un", "Hojalateria"]], [757, ["Perfil J Blanco 6m (2un 3m)", "1,50", "un", "Hojalateria"]], [673, ["Perfil montante económico 38x38x6 0.5 mm 2,4", "458,00", "bidon", "Arriendo Equipos y maquinarias"]], [574, ["Perfil Omega Economico 35*38*15*8*0.5*6mt", "152,00", "tira", "Estructura Metalcom"]], [676, ["Perfil Omega económico 40R 40x18x10x0,5*6mt (Portante)", "707,00", "un", "Estructura Metalcom"]], [573, ["Perfil Omega normal 35*38*15*8*0.85*3mt", "107,00", "tira", "Estructura Metalcom"]], [572, ["Perfil Omega normal 35*38*15*8*0.85*6mt", "73,00", "tira", "Estructura Metalcom"]], [696, ["Perfil Rectangular 20*30*2mmx6mt", "10,00", "tira", "Estructura metalica escala"]], [317, ["perfil rectangular 40*20*2mm*6m", "10,00", "tira", "Materiales de construcción"]], [411, ["perfil rectangular 50*20*2mm*6m", "14,00", "tira", "Materiales de construcción"]], [642, ["Perfil U 62*25-0.85 3mt", "60,00", "tira", "Estructura Metalcom"]], [566, ["Perfil U 62*25-0.85 6mt", "526,00", "un", "Estructura Metalcom"]], [677, ["Perfil U 92*25-0.85 6mt", "226,00", "tira", "Estructura Metalcom"]], [994, ["Perfil U acero 40x20x2mm", "7,00", "tira", "Materiales de construcción"]]];
-
+                [643, ["Perfil C 90*38*12*0.85mm x 4mt", "54,00", "tira", "Estructura Metalcom"]],
+                [675, ["Perfil canal económico 39x20 0.5 mm 3 mt", "74,00", "un", "Estructura Metalcom"]],
+                [695, ["Perfil Cuadrado 20*20*2mmx6mt", "13,00", "tira", "Estructura metalica escala"]],
+                [694, ["Perfil Cuadrado 40*40*2mmx6mt", "14,00", "tira", "Estructura metalica escala"]],
+                [693, ["Perfil Cuadrado 75*75*2mmx6mt", "20,00", "tira", "Estructura metalica escala"]],
+                [762, ["Perfil J Blanco 0.60m V4", "166,00", "un", "Hojalateria"]],
+                [764, ["Perfil J Blanco 0.60m V6", "80,00", "un", "Hojalateria"]],
+                [763, ["Perfil J Blanco 0.82m V6", "40,00", "un", "Hojalateria"]],
+                [759, ["Perfil J Blanco 1.00m V5", "281,60", "un", "Hojalateria"]],
+                [761, ["Perfil J Blanco 1.40m V7", "60,00", "un", "Hojalateria"]],
+                [754, ["Perfil J Blanco 2.40m", "88,00", "un", "Hojalateria"]],
+                [753, ["Perfil J Blanco 2.45m", "336,00", "un", "Hojalateria"]],
+                [755, ["Perfil J Blanco 2.55m", "3,00", "un", "Hojalateria"]],
+                [756, ["Perfil J Blanco 2.65m", "6,00", "un", "Hojalateria"]],
+                [752, ["Perfil J Blanco 3.60m", "26,00", "un", "Hojalateria"]],
+                [1025, ["Perfil J Blanco 3m", "304,00", "un", "Hojalateria"]],
+                [757, ["Perfil J Blanco 6m (2un 3m)", "1,50", "un", "Hojalateria"]],
+                [673, ["Perfil montante económico 38x38x6 0.5 mm 2,4", "458,00", "bidon", "Arriendo Equipos y maquinarias"]],
+                [574, ["Perfil Omega Economico 35*38*15*8*0.5*6mt", "152,00", "tira", "Estructura Metalcom"]],
+                [676, ["Perfil Omega económico 40R 40x18x10x0,5*6mt (Portante)", "707,00", "un", "Estructura Metalcom"]],
+                [573, ["Perfil Omega normal 35*38*15*8*0.85*3mt", "107,00", "tira", "Estructura Metalcom"]],
+                [572, ["Perfil Omega normal 35*38*15*8*0.85*6mt", "73,00", "tira", "Estructura Metalcom"]],
+                [696, ["Perfil Rectangular 20*30*2mmx6mt", "10,00", "tira", "Estructura metalica escala"]],
+                [317, ["perfil rectangular 40*20*2mm*6m", "10,00", "tira", "Materiales de construcción"]],
+                [411, ["perfil rectangular 50*20*2mm*6m", "14,00", "tira", "Materiales de construcción"]],
+                [642, ["Perfil U 62*25-0.85 3mt", "60,00", "tira", "Estructura Metalcom"]],
+                [566, ["Perfil U 62*25-0.85 6mt", "526,00", "un", "Estructura Metalcom"]],
+                [677, ["Perfil U 92*25-0.85 6mt", "226,00", "tira", "Estructura Metalcom"]],
+                [994, ["Perfil U acero 40x20x2mm", "7,00", "tira", "Materiales de construcción"]]
+            ];
 
             var selectMultiColumn = new SelectMultiColumn("select_multi_column");
             selectMultiColumn.setDataJson(materials);
@@ -30,8 +58,6 @@
             selectMultiColumn.setColumnsWidth([235, 80, 50, 120]);
             selectMultiColumn.setMaxWidth(525);
             selectMultiColumn.setMaxHeight(300);
-
-
         </script>
     </body>
 </html>
