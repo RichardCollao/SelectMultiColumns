@@ -401,29 +401,3 @@ class SelectMultiColumn {
     }
 
 }
-
-
-
-// var tr = tbody.querySelector('tr:last-child');
-// element.appendChild(a);
-// element.setAttribute('style', 'visibility: hidden');            
-// 
-// element.className = 'name';
-// element.dataset.classEnabled;            
-
-// element.onclick = this.validateRenameFile.bind(this, file);
-// element.style.display = 'none';
-// element.classList.add('mystyle');
-// 
-//        Array.from(col).forEach(link => {
-//            console.log(link[0], link[1]);
-//        });
-// 
-// window.addEventListener('load', new SelectMultiColumn(), false);
-
-
-//        this.keyboardInput.className = this.originalInput.className;
-// setea los estilos en el nuevo elemento
-//        this._copyNodeStyle(this.originalInput, this.keyboardInput);
-//        var source = event.target || event.srcElement;
-// La propiedad function.caller retorna la función que llamó a la función especificada
