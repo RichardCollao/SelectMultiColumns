@@ -1,6 +1,6 @@
 # Select Multi Columns
 
-Select Multi Columns es un componente web open source desarrollado para extender la funcionalidad de un formulario.
+Select Multi Columns es un componente web open source desarrollado para extender la funcionalidad de cualquier formulario.
 Es un componente similar en funcionamiento y apariencia a un componente de tipo Select o ComboBox, pero además permite visualizar las opciones presentándolas en columnas lo que incrementa la cantidad de información relevante para los usuarios.
 
 ## Descripción
@@ -21,7 +21,7 @@ Enlazar los archivos necesarios
 ```html
 <link href="SelectMultiColumn.css" rel="stylesheet" type="text/css"/>
 ```
-Incluir el input sobre el cual se construira el componente customizado, se debe asignar el atributo id el cual debera ser pasado a la clase javascript en su constructor, es importante que este control este envuelto en una caja cuya clase sea container
+Incluir el input sobre el cual se construira el componente customizado, se debe asignar el atributo "id" el cual debera ser pasado a la clase javascript en su constructor, es importante que este control este envuelto en una caja cuya clase sea container
 
 ```html
 <div class="container">
@@ -37,12 +37,12 @@ Finalmente se inicializa la clase cuando el documento se ha cargado totalmente.
         [719, ["Perfil AT 3m", "272,00", "tira", "Estructura Metalcom"]],
         [569, ["Perfil C 60*38*6*0.85mm x 2.4mt", "1.978,00", "tira", "Estructura Metalcom"]],
         [568, ["Perfil C 60*38*6*0.85mm x 3mt", "30,00", "tira", "Estructura Metalcom"]],
-        [567, ["Perfil C 60*38*6*0.85mm x 4mt", "159,00", "tira", "Estructura Metalcom"]
+        [567, ["Perfil C 60*38*6*0.85mm x 4mt", "159,00", "tira", "Estructura Metalcom"]]
     ];
 
     var selectMultiColumn = new SelectMultiColumn("select_multi_column");
     selectMultiColumn.setDataJson(materials);
-    selectMultiColumn.setNameColumns(['Material', 'Stock', 'Medida', 'Origen']);
+    selectMultiColumn.setNameColumns(['Material', 'Stock', 'Medida', 'Origen']);// opcional
     selectMultiColumn.run();
     selectMultiColumn.setColumnsTextAlign(['left', 'right', 'center', 'left']);
     selectMultiColumn.setColumnsWidth([235, 80, 50, 120]);
