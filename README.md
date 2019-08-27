@@ -21,17 +21,39 @@ Enlazar los archivos necesarios
 ```html
 <link href="SelectMultiColumn.css" rel="stylesheet" type="text/css"/>
 ```
+Incluir el input sobre el cual se construira el componente customizado, se debe asignar el atributo id el cual debera ser pasado a la clase javascript en su constructor, es importante que este control este envuelto en una caja cuya clase sea container
+
 ```html
-Incluir el input sobre el cual se construira el componente customizado, es importante que este control este envuelto en una caja cuya clase sea container
 <div class="container">
             <input id="select_multi_column" type="text" value="" style="width:450px;" class="fake-select" />
 </div>
 ```
-una vez cargado el documento 
+Finalmente se inicializa la clase cuando el documento se ha cargado totalmente.
+
+```javascript
+<script type="text/javascript">
+// el arreglo con los items debe tener la siguiente estructura
+    var materials = [
+        [719, ["Perfil AT 3m", "272,00", "tira", "Estructura Metalcom"]],
+        [569, ["Perfil C 60*38*6*0.85mm x 2.4mt", "1.978,00", "tira", "Estructura Metalcom"]],
+        [568, ["Perfil C 60*38*6*0.85mm x 3mt", "30,00", "tira", "Estructura Metalcom"]],
+        [567, ["Perfil C 60*38*6*0.85mm x 4mt", "159,00", "tira", "Estructura Metalcom"]
+    ];
+
+    var selectMultiColumn = new SelectMultiColumn("select_multi_column");
+    selectMultiColumn.setDataJson(materials);
+    selectMultiColumn.setNameColumns(['Material', 'Stock', 'Medida', 'Origen']);
+    selectMultiColumn.run();
+    selectMultiColumn.setColumnsTextAlign(['left', 'right', 'center', 'left']);
+    selectMultiColumn.setColumnsWidth([235, 80, 50, 120]);
+    selectMultiColumn.setMaxWidth(525);
+    selectMultiColumn.setMaxHeight(300);
+</script>
+```
 
 ## Licencia
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
-                <img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
+    <img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
 </a>
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional License</a>.
