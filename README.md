@@ -6,7 +6,7 @@ Es un componente similar en funcionamiento y apariencia a un componente de tipo 
 ## Descripción
 
 Select Multi Colummns no es un componente como tal ya que de momento no existe de manera nativa un componente de estas características, sin embargo es posible crear un elemento de manera artesanal utilizando algunos trucos combinandos tecnologias web.
-Como cualquier otro componente de formulario posee los correspondientes atributos name y value para la recuperación de datos, su comportamiento está basado en la etiqueta select, por lo tanto posible interactuar con el elemento mediante teclado y mouse, además es posible adaptar su apariencia como se haría con cualquier otro componente.
+Como cualquier otro componente de formulario posee los correspondientes atributos name y value para la recuperación de datos, su comportamiento está basado en la etiqueta select, por lo tanto es posible interactuar con el elemento mediante teclado y mouse, además es posible adaptar su apariencia como se haría con cualquier otro componente.
 
 ![Image description](https://raw.githubusercontent.com/RichardCollao/SelectMultiColumns/master/docs/captura.png)
 
@@ -44,6 +44,7 @@ Finalmente se inicializa la clase cuando el documento se ha cargado totalmente.
     selectMultiColumn.setDataJson(materials);
     selectMultiColumn.setNameColumns(['Material', 'Stock', 'Medida', 'Origen']);// opcional
     selectMultiColumn.run();
+    // los siguientes metodos deben invocarse despues del metodo run()
     selectMultiColumn.setColumnsTextAlign(['left', 'right', 'center', 'left']);
     selectMultiColumn.setColumnsWidth([235, 80, 50, 120]);
     selectMultiColumn.setMaxWidth(525);
