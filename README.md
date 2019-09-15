@@ -5,7 +5,7 @@ Es un componente similar en funcionamiento y apariencia a un componente de tipo 
 
 ## Descripción
 
-Select Multi Colummns no es un componente como tal ya que de momento no existe de manera nativa un componente de estas características, sin embargo es posible crear un elemento de manera artesanal utilizando algunos trucos combinandos tecnologias web.
+Select Multi Colummns no es un componente como tal ya que de momento no existe de manera nativa un componente de estas características, sin embargo es posible crear un elemento de manera artesanal utilizando algunos trucos combinando tecnológicas web.
 Como cualquier otro componente de formulario posee los correspondientes atributos name y value para la recuperación de datos, su comportamiento está basado en la etiqueta select, por lo tanto es posible interactuar con el elemento mediante teclado y mouse, además es posible adaptar su apariencia como se haría con cualquier otro componente.
 
 ![Image description](https://raw.githubusercontent.com/RichardCollao/SelectMultiColumns/master/docs/captura.png)
@@ -21,7 +21,7 @@ Enlazar los archivos necesarios
 ```html
 <link href="SelectMultiColumn.css" rel="stylesheet" type="text/css"/>
 ```
-Incluir el input sobre el cual se construira el componente customizado, se debe asignar el atributo "id" el cual debera ser pasado a la clase javascript en su constructor, es importante que este control este envuelto en una caja cuya clase sea container
+Incluir el input sobre el cual se construirá el componente, se debe asignar el atributo "id" el cual deberá ser pasado a la clase SelectMultiColumn en su constructor
 
 ```html
 <div class="container">
@@ -40,15 +40,27 @@ Finalmente se inicializa la clase cuando el documento se ha cargado totalmente.
         [567, ["Perfil C 60*38*6*0.85mm x 4mt", "159,00", "tira", "Estructura Metalcom"]]
     ];
 
-    var selectMultiColumn = new SelectMultiColumn("select_multi_column");
-    selectMultiColumn.setDataJson(materials);
-    selectMultiColumn.setNameColumns(['Material', 'Stock', 'Medida', 'Origen']);// opcional
-    selectMultiColumn.run();
-    // los siguientes metodos deben invocarse despues del metodo run()
-    selectMultiColumn.setColumnsTextAlign(['left', 'right', 'center', 'left']);
-    selectMultiColumn.setColumnsWidth([235, 80, 50, 120]);
-    selectMultiColumn.setMaxWidth(525);
-    selectMultiColumn.setMaxHeight(300);
+            document.addEventListener("DOMContentLoaded", function () {
+                var selectMultiColumn = new SelectMultiColumn("select_multi_column");
+                selectMultiColumn.setDataJson(materials);
+                // Opcionalmente puede definir una cabecera con los nombres de las columnas
+                selectMultiColumn.setNameColumns(['Material', 'Stock', 'Medida', 'Origen']);// opcional
+                // Por defecto la tabla de opciones se divide en columnas cuya anchura es igual para cada columna
+                // el siguiente método opcional permite extender la anchura de cada columna
+                selectMultiColumn.setColumnsColSpan([2, 1, 1, 1]);
+
+                selectMultiColumn.run();
+                // los siguientes métodos opcionales deben invocarse después del método run()
+
+                // permite estblecer la alineacion del texto para cada columna
+                selectMultiColumn.setColumnsTextAlign(['left', 'right', 'center', 'left']);
+                // Opcionalmente es posible definir un ancho personalizado para cada columna (ignora el método setColumnsColSpan)
+                selectMultiColumn.setColumnsWidth([250, 80, 50, 120]);
+                // establece el ancho de la caja de opciones que por defecto es igual al ancho del componente input sobre el cual se construye el componente
+                selectMultiColumn.setWidthBoxOptions(500);
+                // establece el alto de la caja de opciones que por defecto es de 250px
+                selectMultiColumn.setHeightBoxOptions(300);
+            }, false);
 </script>
 ```
 

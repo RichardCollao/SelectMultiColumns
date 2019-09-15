@@ -1,34 +1,40 @@
 /**
-@Select Multi Columns   componente similar en funcionamiento y apariencia a un componente de tipo Select 
-                        que permite visualizar las opciones presentándolas en columnas.
-@version                1.0.0
-@author                 Richard Collao O.
-@web                    http://www.richardcollao.cl/
-@license                Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional License
-*/
+ @Select Multi Columns   componente similar en funcionamiento y apariencia a un componente de tipo Select 
+ que permite visualizar las opciones presentándolas en columnas.
+ @version                1.0.0
+ @author                 Richard Collao O.
+ @web                    http://www.richardcollao.cl/
+ @license                Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional License
+ */
 
 class SelectMultiColumn {
 
     constructor(idElement) {
         this.data = [];
-        this.originalInput = document.getElementById(idElement);
-        this.container = this.originalInput.closest('.container');
-        this.container.classList.add('unselect-text');
+        this.container = document.createElement('div');
+        this.container.classList.add('wrapper-smc');
+        // Envuelve el elemento en la caja contenedora
+        var element = document.getElementById(idElement);
+        var copy = element.cloneNode(true);
+        element.replaceWith(this.container);
+        this.originalInput = copy;
+        this.container.appendChild(copy);
 
         this.fakeSelect = null; // imita la apariencia y comportamiento de un elemento select;
         this.keyboardInput = null; // caja invisible que captura el teclado
-        this.boxTables = null; // caja que contiene la tabla
+        this.containerTables = null; // caja que contiene la tabla
         this.tBody = null; // caja que contiene la tabla
         this.tHead = null; // caja que contiene el nombre de las columnas
         this.rows = []; // continene todos los elementos tr para facilitar las busquedas.   
         this._typedText = ''; // contiene el texto ingresado en keyboardInput
         this._totalMatch = 0; // guarda la cantidad de registros conincidentes con lo tipeado
-        this._oldIndexPosition = 0;// guarda la ultima posicion del puntero
+        this._oldIndexPosition = 0; // guarda la ultima posicion del puntero
         this._indexPosition = 0; // guarda la posicion del puntero
         this._mapMatchs = new Map();
         this._nameColumuns = [];
         this._allowBlockCollapse = true;
-
+        this._statusContainerTables = 'collapsed';
+        this._heightBoxOptions = 250;
     }
 
     setDataJson(data) {
@@ -37,8 +43,8 @@ class SelectMultiColumn {
 
     _iterateColumns(arr, callback) {
         for (let i = 0; i < arr.length; i++) {
-            let qs = '.container table td:nth-child(' + (i + 1) + ')';
-            Array.from(document.querySelectorAll(qs)).forEach(elem => {
+            let qs = 'table td:nth-child(' + (i + 1) + ')';
+            Array.from(this.container.querySelectorAll(qs)).forEach(elem => {
                 if (elem !== null) {
                     callback(elem, arr[i]);
                 }
@@ -61,51 +67,47 @@ class SelectMultiColumn {
         });
     }
 
-    setMaxWidth(w) {
-        this.boxTables.style.maxWidth = w + 'px';
+    setColumnsColSpan(arr) {
+        this.colSpan = arr;
     }
 
-    setMaxHeight(h) {
-        this.boxTables.style.maxHeight = h + 'px';
+    setWidthBoxOptions(w) {
+        this.containerTables.style.minWidth = w + 'px';
+        this.containerTables.style.maxWidth = w + 'px';
+        this.containerTables.style.width = w + 'px';
     }
 
-    setNameColumns(n) {
-        this._nameColumuns = n;
+    setHeightBoxOptions(h) {
+        this._heightBoxOptions = h;
+    }
+
+    setNameColumns(arr) {
+        this._nameColumuns = arr;
     }
 
     run() {
         //TODO: Definir ancho de las tablas automaticamente... console.log(this.originalInput.offsetWidth);
-               
         // inicializa _totalMatch con la misma cantidad de registros.
         this._totalMatch = this.data.length;
         // crea el elemento que emulara el componente select
         this._makeFakeSelect();
-
-        this._prepareTables();
-        // crea la tabla con las filas de acuerdo a la variable data
-        this._makeTBody();
-
-        // crea la cabecera
-        if (this._nameColumuns.length > 0) {
-            this._makeTHeader();
-        }
-
+        // Prepara las tablas y las agrega al DOM
+        this._makeTables();
         // asigna eventos para establecer el comportamiento del componete
         this._behavior();
         // actualiza las coincidencias
         this._actualizeMatchs();
         // Actualiza el componente de acuerdo a los cambios
         this._updateChanges();
+        // establece el tamaño por defecto de las tablas
+        this._defaulTablesSize();
     }
 
     _makeFakeSelect() {
-        // agraga la clase css que bloquea(no siempre funciona) la seleccion de texto en el elemento
-        this.originalInput.classList.add('unselect-text');
         // crea el falso elemento select
         this.fakeSelect = document.createElement('div');
-        this._copyNodeStyle(this.originalInput, this.fakeSelect);
+        // this._copyNodeStyle(this.originalInput, this.fakeSelect);
         this.fakeSelect.className = this.originalInput.className;
-
         this.fakeSelect.contenteditable = true;
         // crea el input transparente encargado de capturar el teclado
         this.keyboardInput = this.originalInput.cloneNode(false);
@@ -114,7 +116,6 @@ class SelectMultiColumn {
         this.keyboardInput.dataset.dataValue = '';
         this.keyboardInput.id = null;
         this.keyboardInput.addEventListener('keyup', this._resolveKeyUp.bind(this));
-
         this.keyboardInput.className = 'keyboard-input fake-select collapsed';
         this.container.appendChild(this.fakeSelect);
         this.container.appendChild(this.keyboardInput);
@@ -122,66 +123,81 @@ class SelectMultiColumn {
         this.originalInput.type = 'hidden';
     }
 
-    _prepareTables() {
-        this.boxTables = document.createElement('div');
-        this.boxTables.className = 'box-tables';
-        this.boxTHead = document.createElement('div');
-        this.boxTHead.className = 'box-tbody';
-        this.boxTBody = document.createElement('div');
-        this.boxTBody.className = 'box-tbody';
+    // define el tamaño por defecto de la tabla de acuerdo al componente fakeSelect
+    _defaulTablesSize() {
+        // establece el ancho del contenedor de las tablas de acuerdo al ancho de elemento fakeSelect
+        let w = this.keyboardInput.offsetWidth;
+        this.containerTables.style.width = w + 'px';
 
-        this.tHead = document.createElement('table');
-        this.tHead.className = 'thead';
-        this.tBody = document.createElement('table');
-        this.tBody.className = 'tbody';
+        // Copia el ancho de las columnas de la tabla tbody en la tabla tHead 
+        var tdsTHead = this.tHead.querySelectorAll('tr:first-of-type td');
+        var tdsTBody = this.tBody.querySelectorAll('tr:first-of-type td');
+        for (let i = 0; i < this._nameColumuns.length; i++) {
+            // tdsTHead[i].style.width = tdsTBody[i].offsetWidth + 'px';
+        }
 
-
-        this.boxTHead.appendChild(this.tHead);
-        this.boxTBody.appendChild(this.tBody);
-
-        this.boxTables.appendChild(this.boxTHead);
-        this.boxTables.appendChild(this.boxTBody);
-
-        this.container.appendChild(this.boxTables);
     }
 
-    // TODO: Mejorar este bodrio y encontrar la manera de obtener ancho real de columnas
-    _makeTHeader() {
+    _makeTables() {
+        this.containerTables = document.createElement('div');
+        this.containerTables.className = 'container-tables';
+        this.tHead = document.createElement('table');
+        this.tHead.className = 'thead sticky';
+        this.tBody = document.createElement('table');
+        this.tBody.className = 'tbody';
+        this.containerTables.appendChild(this.tHead);
+        this.containerTables.appendChild(this.tBody);
+        this.container.appendChild(this.containerTables);
+        // crea la tabla con la cabecera
+        if (this._nameColumuns.length > 0) {
+            this._makeTHead();
+        }
+        this._makeTBody();
+        // establece la altura para la caja de opciones
+        this.containerTables.style.maxHeight = this._heightBoxOptions + 'px';
+    }
+
+    _makeTHead() {
         var tr = document.createElement('tr');
         for (let i = 0; i < this._nameColumuns.length; i++) {
             let td = document.createElement('td');
             td.innerHTML = this._nameColumuns[i];
             tr.appendChild(td);
+            // establece el atributo colpan cuando se ha definido 
+            if (this.colSpan) {
+                td.colSpan = this.colSpan[i];
+            }
         }
         this.tHead.appendChild(tr);
     }
 
-    // TODO: Mejorar este bodrio y encontrar la manera de obtener ancho real de columnas
-    _calculateColumnWidth() {
-        var tdsTHead = this.tHead.querySelectorAll('tr:first-of-type td');
-        var tdsTBody = this.tBody.querySelectorAll('tr:first-of-type td');
-        for (let i = 0; i < this._nameColumuns.length; i++) {
-            tdsTHead[i].style.width = tdsTBody[i].offsetWidth + 'px';
-        }
-    }
-
     _makeTBody() {
         // Recorre las filas
-        for (let i = 0; i < this.data.length; i++) {
+        for (var index = 0; index < this.data.length; index++) {
             let tr = document.createElement('tr');
-            let row = this.data[i]; // obtiene un array tipo [id, [col1, col2, col2, ...]]
+            let row = this.data[index]; // obtiene un array tipo [id, [col1, col2, col2, ...]]
             var cols = row[1];
+            var id = row[0];
+
+            // Autoselecciona el item que concuerda con el valor del input
+            if (row[0] == this.originalInput.value) {
+                this._indexPosition = index;
+            }
+
             // Recorre las columnas
             for (let i = 0; i < cols.length; i++) {
                 let td = document.createElement('td');
                 td.innerHTML = cols[i];
                 tr.appendChild(td);
+                // establece el atributo colpan cuando se ha definido 
+                if (this.colSpan) {
+                    td.colSpan = this.colSpan[i];
+                }
             }
             // establece los atributos dataset
             tr.dataset.id = row[0];
             tr.dataset.value = cols[0];
             tr.onclick = this._resolveClick.bind(this);
-
             this.tBody.appendChild(tr);
             // crea objeto utilizado en las iteraciones de busqueda
             this.rows.push(tr);
@@ -189,11 +205,13 @@ class SelectMultiColumn {
     }
 
     _resolveKeyUp(event) {
-        var key = event.keyCode || event.which;
+        // bloquea el colapso hasta que sale
+        this._allowBlockCollapse = false;
 
-        var pattern = new RegExp(/^[a-z0-9 ñáéíóú\-_]+$/i);// Importante: el documento debe tener codificacion UTF-8 
+        var key = event.keyCode || event.which;
+        var pattern = new RegExp(/^[a-z0-9 ñáéíóú\-_]+$/i); // Importante: el documento debe tener codificacion UTF-8 
         var char = this.keyboardInput.value;
-        this.keyboardInput.value = '';// borra el contenido del input
+        this.keyboardInput.value = ''; // borra el contenido del input
 
         //TODO:  Si es pulsada la tecla SPACE antes que cualquier otra tecla se expande el componente
         if (key === 32 && this._typedText.length === 0) {
@@ -203,7 +221,6 @@ class SelectMultiColumn {
 
         if (char.match(pattern)) {
             this._typedText = this._typedText + char;
-
             // llama al metodo que actualiza las coincidencias 
             // sino encuentra vuelve a llamar reseteando el parametro de busqueda
             if (!this._actualizeMatchs()) {
@@ -215,7 +232,6 @@ class SelectMultiColumn {
             this._oldIndexPosition = 0;
             // Actualiza el componente de acuerdo a los cambios
             this._updateChanges();
-
             return;
         }
 
@@ -239,7 +255,6 @@ class SelectMultiColumn {
         this._oldIndexPosition = this._indexPosition;
         // devuelve el foco a la caja de entrada
         this.keyboardInput.focus();
-
         var row = e.currentTarget;
         this._indexPosition = parseInt(row.dataset.index);
         this._updateChanges();
@@ -277,7 +292,7 @@ class SelectMultiColumn {
         } else if (this._indexPosition > (this._totalMatch - 1)) {
             this._indexPosition = 0;
         }
-        return this._oldIndexPosition !== this._indexPosition;// devuelve true cuando el puntero cambia, false sino
+        return this._oldIndexPosition !== this._indexPosition; // devuelve true cuando el puntero cambia, false sino
     }
 
     _actualizeMatchs() {
@@ -303,7 +318,6 @@ class SelectMultiColumn {
             }
             row.className = 'unselected-row';
         }.bind(this));
-
         return this._totalMatch > 0;
     }
 
@@ -330,19 +344,18 @@ class SelectMultiColumn {
 
     _adjustScroll() {
         var row = this._mapMatchs.get(this._indexPosition);
-
-        var container = this.boxTBody;
-        var tableHeight = container.offsetHeight;
-
+        var container = this.containerTables;
+        var tableHead = this.tHead.offsetHeight;
+        var tableBody = container.offsetHeight - tableHead;
         var rowHeight = row.offsetHeight;
-        var rowTop = row.offsetTop;// Posición real del elemento
-
+        var rowTop = row.offsetTop; // Posición real del elemento
+        // console.log({'tableHead':tableHead, 'tableBody': tableBody, 'rowHeight': rowHeight, 'rowTop': rowTop});
         // Desplaza el scroll si la posición del puntero esta fuera de los bordes
         if (rowTop <= container.scrollTop) {
             container.scrollTop = rowTop;
         }
-        if (rowTop >= (container.scrollTop + tableHeight) - rowHeight) {
-            container.scrollTop = (rowTop - tableHeight + rowHeight);
+        if (rowTop >= (container.scrollTop + tableBody) - rowHeight) {
+            container.scrollTop = (rowTop - tableBody + rowHeight);
         }
     }
 
@@ -352,52 +365,60 @@ class SelectMultiColumn {
     // al presionar la tecla espacio se expande
     // al perder el foco se colapsa
     // al hacer pulsar enter cuando esta expandido se colapsa
-    // al hacer pulsar enter cuando cuando esta colapsado se expande
+    // al hacer pulsar enter cuando cuando esta colapsado envia formulario
     // al pulsar escape se colapsa
-    // al pulsar tab estando expandido solo se colapsa
-    // al presionar tab estando colapsado pierde el foco
+    // al presionar tab estando pierde el foco
     _behavior() {
         this.keyboardInput.onclick = function () {
             this._showTable();
         }.bind(this);
-
         this.keyboardInput.onkeydown = function () {
             // permite ocultar la tabla cuando se pierde el foco por un evento de teclado
             this._allowBlockCollapse = true;
         }.bind(this);
-
         this.keyboardInput.onblur = function () {
             if (this._allowBlockCollapse === true) {
                 this._hideTable();
             }
         }.bind(this);
-
-        this.tBody.onmouseenter = function () {
+        // Cuando el puntero esta dentro del contenedor de tablas bloque el colapso hasta que sale
+        this.containerTables.onmouseenter = function () {
             this._allowBlockCollapse = false;
         }.bind(this);
-
-        this.boxTables.onmouseleave = function () {
+        this.containerTables.onmouseleave = function () {
             this._allowBlockCollapse = true;
         }.bind(this);
+        // bloquea el envio del formulario mientras la tabla se encuentre expandida
+        // este comportamiento evita que al presionar enter se envie el formulario
+        var form = this.originalInput.closest('form');
+        if (form) {
+            form.addEventListener('submit', function () {
+                if (this._statusContainerTables == 'expanded') {
+                    event.preventDefault();
+                }
+            }.bind(this), false);
+        }
     }
 
     _hideTable() {
-        this.boxTables.style.display = 'none';
+        this.containerTables.style.visibility = 'hidden';
         this.keyboardInput.className = 'keyboard-input fake-select collapsed';
-
+        this._statusContainerTables = 'collapsed';
     }
 
     _showTable() {
-        this.boxTables.style.display = 'block';
+        this.containerTables.style.visibility = 'visible';
         this.keyboardInput.className = 'keyboard-input fake-select expanded';
-
-        // Copia el ancho de las columnas desde TDody para THead 
-        this._calculateColumnWidth();
+        this._statusContainerTables = 'expanded';
     }
 
-    _copyNodeStyle(sourceNode, targetNode) {
-        const computedStyle = window.getComputedStyle(sourceNode);
-        Array.from(computedStyle).forEach(key => targetNode.style.setProperty(key, computedStyle.getPropertyValue(key), computedStyle.getPropertyPriority(key)));
+    _blockSubmit(event) {
+        event.preventDefault();
     }
-
 }
+
+// TODO: posible uso
+//    _copyNodeStyle(sourceNode, targetNode) {
+//        const computedStyle = window.getComputedStyle(sourceNode);
+//        Array.from(computedStyle).forEach(key => targetNode.style.setProperty(key, computedStyle.getPropertyValue(key), computedStyle.getPropertyPriority(key)));
+//    }

@@ -8,10 +8,9 @@
     </head>
     <body>
         <h1>Select Multi Columns</h1>
-
-        <div class="container">
-            <input id="select_multi_column" type="text" value="" style="width:450px;" class="fake-select" />
-        </div>
+        <form action="www.google.cl" method="post">
+            <input id="select_multi_column" type="text" value="568" style="width:500px;" class="fake-select" />
+        </form>
 
         <script type="text/javascript">
             var materials = [
@@ -49,15 +48,28 @@
                 [677, ["Perfil U 92*25-0.85 6mt", "226,00", "tira", "Estructura Metalcom"]],
                 [994, ["Perfil U acero 40x20x2mm", "7,00", "tira", "Materiales de construcción"]]
             ];
+            document.addEventListener("DOMContentLoaded", function () {
+                var selectMultiColumn = new SelectMultiColumn("select_multi_column");
+                selectMultiColumn.setDataJson(materials);
+                // Opcionalmente puede definir una cabecera con los nombres de las columnas
+                selectMultiColumn.setNameColumns(['Material', 'Stock', 'Medida', 'Origen']);// opcional
+                // Por defecto la tabla de opciones se divide en columnas cuya anchura es igual para cada columna
+                // el siguiente método opcional permite extender la anchura de cada columna
+                selectMultiColumn.setColumnsColSpan([2, 1, 1, 1]);
 
-            var selectMultiColumn = new SelectMultiColumn("select_multi_column");
-            selectMultiColumn.setDataJson(materials);
-            selectMultiColumn.setNameColumns(['Material', 'Stock', 'Medida', 'Origen']);
-            selectMultiColumn.run();
-            selectMultiColumn.setColumnsTextAlign(['left', 'right', 'center', 'left']);
-            selectMultiColumn.setColumnsWidth([235, 80, 50, 120]);
-            selectMultiColumn.setMaxWidth(525);
-            selectMultiColumn.setMaxHeight(300);
+                selectMultiColumn.run();
+                // los siguientes métodos opcionales deben invocarse después del método run()
+
+                // permite estblecer la alineacion del texto para cada columna
+                selectMultiColumn.setColumnsTextAlign(['left', 'right', 'center', 'left']);
+                // Opcionalmente es posible definir un ancho personalizado para cada columna (ignora el método setColumnsColSpan)
+                selectMultiColumn.setColumnsWidth([250, 80, 50, 120]);
+                // establece el ancho de la caja de opciones que por defecto es igual al ancho del componente input sobre el cual se construye el componente
+                selectMultiColumn.setWidthBoxOptions(500);
+                // establece el alto de la caja de opciones que por defecto es de 250px
+                selectMultiColumn.setHeightBoxOptions(300);
+            }, false);
+
         </script>
     </body>
 </html>
