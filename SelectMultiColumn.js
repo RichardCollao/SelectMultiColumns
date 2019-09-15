@@ -115,6 +115,7 @@ class SelectMultiColumn {
         this.keyboardInput.value = '';
         this.keyboardInput.dataset.dataValue = '';
         this.keyboardInput.id = null;
+        this.keyboardInput.name = null;
         this.keyboardInput.addEventListener('keyup', this._resolveKeyUp.bind(this));
         this.keyboardInput.className = 'keyboard-input fake-select collapsed';
         this.container.appendChild(this.fakeSelect);
